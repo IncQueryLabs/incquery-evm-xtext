@@ -17,8 +17,7 @@ import org.eclipse.incquery.runtime.evm.specific.lifecycle.UnmodifiableActivatio
  * This is the default implementation for an activation life cycle.
  * 
  * The following is the summary of the possible transitions, in the form of
- * StateFrom -Event-> StateTo (U : Update state used, D : Disappeared state
- * used), :
+ * StateFrom -Event-> StateTo:
  * <ul>
  * <li>Inactive -Match Appears-> Appeared</li>
  * <li>Appeared -Match Disappears-> Inactive</li>
