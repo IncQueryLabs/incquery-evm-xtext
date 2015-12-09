@@ -53,7 +53,7 @@ public class XtextIndexedObjectEventSource extends EventSourceAdapter<XtextIndex
 	}
 
 	protected void resendEventsForExistingResources(EventHandler<XtextIndexedObject> handler) {
-		for (IResourceDescription description : realm.getBuilderState().getAllResourceDescriptions()) {
+		for (IResourceDescription description : realm.getDescriptions().getAllResourceDescriptions()) {
 			for (IEObjectDescription objectDescription : description.getExportedObjects()) {
 				handler.handleEvent(new XtextIndexedObjectEvent(XtextIndexEventType.CREATED, description, objectDescription));
 			}
@@ -78,14 +78,14 @@ public class XtextIndexedObjectEventSource extends EventSourceAdapter<XtextIndex
 	@Override
 	protected void prepareSource() {
 		resourceListener = new XtextResourceDescriptionChangeListener();
-		realm.getBuilderState().addListener(resourceListener);
+		realm.getEventSource().addListener(resourceListener);
 		
 	}
 
 	@Override
 	public void dispose() {
 		if (resourceListener != null) {
-			realm.getBuilderState().removeListener(resourceListener);
+			realm.getEventSource().removeListener(resourceListener);
 			resourceListener = null;
 		}
 		super.dispose();

@@ -1,21 +1,26 @@
 package com.incquerylabs.evm.xtext;
 
 import org.eclipse.incquery.runtime.evm.api.event.EventRealm;
-import org.eclipse.xtext.builder.builderState.IBuilderState;
-import org.eclipse.xtext.resource.IResourceDescription.Delta;
 import org.eclipse.xtext.resource.IResourceDescription.Event;
-import org.eclipse.xtext.resource.IResourceDescription.Event.Listener;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 
 public class XtextEventRealm implements EventRealm {
 
-	IBuilderState builderState;
-	
-	public XtextEventRealm(IBuilderState builderState) {
-		this.builderState = builderState;
+	final Event.Source eventSource;
+	final IResourceDescriptions descriptions;
+
+	public XtextEventRealm(Event.Source eventSource, IResourceDescriptions descriptions) {
+		super();
+		this.eventSource = eventSource;
+		this.descriptions = descriptions;
 	}
-	
-	public IBuilderState getBuilderState() {
-		return builderState;
+
+	public Event.Source getEventSource() {
+		return eventSource;
+	}
+
+	public IResourceDescriptions getDescriptions() {
+		return descriptions;
 	}
 
 	public void dispose() {

@@ -9,7 +9,7 @@ import com.incquerylabs.evm.xtext.resource.events.XtextIndexResourceEventSourceS
 import org.eclipse.incquery.runtime.evm.api.EventDrivenVM
 import org.eclipse.incquery.runtime.evm.api.Job
 import org.eclipse.incquery.runtime.evm.api.RuleSpecification
-import org.eclipse.xtext.builder.builderState.IBuilderState
+import org.eclipse.xtext.resource.IResourceDescription.Event
 import org.eclipse.incquery.runtime.evm.api.RuleEngine
 import org.eclipse.incquery.runtime.evm.api.Context
 import org.eclipse.incquery.runtime.evm.api.Activation
@@ -17,6 +17,7 @@ import org.eclipse.incquery.runtime.evm.api.ActivationLifeCycle
 import com.incquerylabs.evm.xtext.eobject.event.XtextIndexedObjectEventSourceSpecification
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject
 import com.incquerylabs.evm.xtext.eobject.XtextObjectJob
+import org.eclipse.xtext.resource.IResourceDescriptions
 
 class XtextIndexLoggerApplication {
     
@@ -58,8 +59,8 @@ class XtextIndexLoggerApplication {
         new RuleSpecification<XtextIndexedObject>(sourceSpecification, lifecycle, jobs)
     }
     
-    def initialize(IBuilderState state) {
-        val realm = new XtextEventRealm(state)
+    def initialize(Event.Source source, IResourceDescriptions descriptions) {
+        val realm = new XtextEventRealm(source, descriptions)
         engine = EventDrivenVM.createRuleEngine(realm)
         
         val lifecycle = new XtextActivationLifeCycle 

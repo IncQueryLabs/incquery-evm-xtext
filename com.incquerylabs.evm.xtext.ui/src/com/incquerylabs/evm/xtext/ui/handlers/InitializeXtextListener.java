@@ -6,24 +6,21 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.xtext.builder.builderState.IBuilderState;
-import org.eclipse.xtext.resource.IResourceDescription.Event;
-import org.eclipse.xtext.resource.IResourceDescription.Event.Listener;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.ui.notification.IStateChangeEventBroker;
 
-import com.google.inject.Injector;
 import com.incquerylabs.evm.xtext.ui.XtextIndexLoggerApplication;
 
 public class InitializeXtextListener extends AbstractHandler implements IHandler {
 
 	@Inject
-	IBuilderState state;
+	IStateChangeEventBroker source;
+	@Inject
+	IResourceDescriptions descriptions;
 	
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		XtextIndexLoggerApplication.INSTANCE.initialize(state);
+		XtextIndexLoggerApplication.INSTANCE.initialize(source, descriptions);
 		return null;
 	}
 
