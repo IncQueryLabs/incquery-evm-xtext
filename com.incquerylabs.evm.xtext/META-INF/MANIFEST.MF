@@ -9,6 +9,7 @@ Require-Bundle: org.eclipse.incquery.runtime.evm;bundle-version="1.1.0",
  org.eclipse.xtext;bundle-version="2.9.0",
  org.eclipse.xtext.builder;bundle-version="2.9.0"
 Export-Package: com.incquerylabs.evm.xtext,
+ com.incquerylabs.evm.xtext.eobject,
  com.incquerylabs.evm.xtext.eobject.event,
  com.incquerylabs.evm.xtext.resource,
  com.incquerylabs.evm.xtext.resource.events

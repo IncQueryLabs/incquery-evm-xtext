@@ -1,4 +1,4 @@
-package com.incquerylabs.evm.xtext.eobject.event;
+package com.incquerylabs.evm.xtext.eobject;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -19,16 +19,13 @@ public class XtextIndexedObject {
 	private final IEObjectDescription eObject;
 	private final QualifiedName objectName;
 	
-	private final EClass type;
 
-
-	private XtextIndexedObject(IResourceDescription resource, IEObjectDescription eObject, EClass type) {
+	public XtextIndexedObject(IResourceDescription resource, IEObjectDescription eObject) {
 		super();
 		this.resource = resource;
 		resourceURI = resource.getURI();
 		this.eObject = eObject;
 		objectName = eObject.getQualifiedName();
-		this.type = type;
 	}
 
 
@@ -37,13 +34,13 @@ public class XtextIndexedObject {
 	}
 
 
-	public IEObjectDescription geteObject() {
+	public IEObjectDescription getEObject() {
 		return eObject;
 	}
 
 
 	public EClass getType() {
-		return type;
+		return eObject.getEClass();
 	}
 
 
@@ -53,7 +50,6 @@ public class XtextIndexedObject {
 		int result = 1;
 		result = prime * result + ((objectName == null) ? 0 : objectName.hashCode());
 		result = prime * result + ((resourceURI == null) ? 0 : resourceURI.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -76,11 +72,6 @@ public class XtextIndexedObject {
 			if (other.resourceURI != null)
 				return false;
 		} else if (!resourceURI.equals(other.resourceURI))
-			return false;
-		if (type == null) {
-			if (other.type != null)
-				return false;
-		} else if (!type.equals(other.type))
 			return false;
 		return true;
 	}

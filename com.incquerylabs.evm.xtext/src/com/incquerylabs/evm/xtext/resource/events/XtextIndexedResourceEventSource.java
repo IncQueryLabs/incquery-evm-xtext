@@ -18,17 +18,15 @@ public class XtextIndexedResourceEventSource extends EventSourceAdapter<XtextInd
 		@Override
 		public void descriptionsChanged(Event event) {
 			for (Delta delta : event.getDeltas()) {
-				if (delta.haveEObjectDescriptionsChanged()) {
-					if (delta.getOld() == null && delta.getNew() != null) {
-						//Addition event
-						notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.CREATED, delta.getNew()));
-					} else if (delta.getOld() != null && delta.getNew() == null) {
-						//Remove event
-						notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.REMOVED, delta.getOld()));
-					} else if (delta.getOld() != null && delta.getNew() != null) {
-						//Update event
-						notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.UPDATED, delta.getNew()));
-					}
+				if (delta.getOld() == null && delta.getNew() != null) {
+					// Addition event
+					notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.CREATED, delta.getNew()));
+				} else if (delta.getOld() != null && delta.getNew() == null) {
+					// Remove event
+					notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.REMOVED, delta.getOld()));
+				} else if (delta.getOld() != null && delta.getNew() != null) {
+					// Update event
+					notifyHandlers(new XtextIndexedResourceEvent(XtextIndexEventType.UPDATED, delta.getNew()));
 				}
 			}
 		}
