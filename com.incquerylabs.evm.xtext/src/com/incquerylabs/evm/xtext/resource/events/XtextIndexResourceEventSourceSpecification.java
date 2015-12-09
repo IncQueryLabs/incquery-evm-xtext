@@ -8,9 +8,10 @@ import org.eclipse.incquery.runtime.evm.api.event.EventSourceSpecification;
 
 import com.google.common.base.Preconditions;
 import com.incquerylabs.evm.xtext.XtextEventRealm;
+import com.incquerylabs.evm.xtext.XtextIndexEventHandler;
 import com.incquerylabs.evm.xtext.resource.XtextIndexedResource;
 
-public class XtextIndexResourceEventSourceSpecification implements EventSourceSpecification<XtextIndexedResource>{
+public class XtextIndexResourceEventSourceSpecification implements EventSourceSpecification<XtextIndexedResource> {
 
 	@Override
 	public EventFilter<XtextIndexedResource> createEmptyFilter() {
@@ -31,9 +32,11 @@ public class XtextIndexResourceEventSourceSpecification implements EventSourceSp
 			@Override
 			public void prepareRuleInstance(RuleInstance<XtextIndexedResource> ruleInstance,
 					EventFilter<? super XtextIndexedResource> filter) {
-				XtextIndexedResourceEventSource source = new XtextIndexedResourceEventSource(XtextIndexResourceEventSourceSpecification.this, (XtextEventRealm) realm);
+				XtextIndexedResourceEventSource source = new XtextIndexedResourceEventSource(
+						XtextIndexResourceEventSourceSpecification.this, (XtextEventRealm) realm);
 				source.prepareSource();
-				XtextIndexedResourceEventHandler handler = new XtextIndexedResourceEventHandler(source, filter, ruleInstance);
+				XtextIndexEventHandler<XtextIndexedResource, XtextIndexedResourceEventSource> handler = new XtextIndexEventHandler<>(
+						source, filter, ruleInstance);
 				handler.prepareEventHandler();
 			}
 		};
