@@ -11,7 +11,7 @@ import com.incquerylabs.evm.xtext.XtextEventRealm;
 import com.incquerylabs.evm.xtext.XtextIndexEventHandler;
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject;
 
-public class XtextIndexedObjectEventSourceSpecification implements EventSourceSpecification<XtextIndexedObject> {
+public class XtextIndexObjectEventSourceSpecification implements EventSourceSpecification<XtextIndexedObject> {
 
 	@Override
 	public EventFilter<XtextIndexedObject> createEmptyFilter() {
@@ -33,7 +33,7 @@ public class XtextIndexedObjectEventSourceSpecification implements EventSourceSp
 			public void prepareRuleInstance(RuleInstance<XtextIndexedObject> ruleInstance,
 					EventFilter<? super XtextIndexedObject> filter) {
 				XtextIndexedObjectEventSource source = new XtextIndexedObjectEventSource(
-						XtextIndexedObjectEventSourceSpecification.this, (XtextEventRealm) realm);
+						XtextIndexObjectEventSourceSpecification.this, (XtextEventRealm) realm);
 				source.prepareSource();
 				XtextIndexEventHandler<XtextIndexedObject, XtextIndexedObjectEventSource> handler = new XtextIndexEventHandler<>(
 						source, filter, ruleInstance);

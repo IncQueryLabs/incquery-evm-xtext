@@ -32,21 +32,6 @@ public class XtextIndexedObjectEventSource extends EventSourceAdapter<XtextIndex
 							notifyHandlers(new XtextIndexedObjectEvent(XtextIndexEventType.CREATED, delta.getNew(), description));
 						}
 					}
-//					if (delta.getOld() == null && delta.getNew() != null) {
-//						//Addition event
-//						for (IEObjectDescription description : delta.getNew().getExportedObjects()) {
-//							notifyHandlers(new XtextIndexedEObjectEvent(XtextIndexEventType.CREATED, delta.getNew(), description));
-//						}
-//					} else if (delta.getOld() != null && delta.getNew() == null) {
-//						//Remove event
-//						for (IEObjectDescription description : delta.getOld().getExportedObjects()) {
-//							notifyHandlers(new XtextIndexedEObjectEvent(XtextIndexEventType.REMOVED, delta.getOld(), description));
-//						}
-//					} else if (delta.getOld() != null && delta.getNew() != null) {
-//						//Update event
-//						//notifyHandlers(new XtextIndexedEObjectEvent(XtextIndexEventType.UPDATED, delta.getNew()));
-//						//TODO
-//					}
 				}
 			}
 		}

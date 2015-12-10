@@ -35,6 +35,8 @@ import org.eclipse.incquery.runtime.evm.specific.lifecycle.UnmodifiableActivatio
  */
 public final class XtextActivationLifeCycle extends UnmodifiableActivationLifeCycle {
 
+	public static final XtextActivationLifeCycle INSTANCE = new XtextActivationLifeCycle();
+	
 	public XtextActivationLifeCycle() {
 
 		super(XtextIndexActivationState.INACTIVE);

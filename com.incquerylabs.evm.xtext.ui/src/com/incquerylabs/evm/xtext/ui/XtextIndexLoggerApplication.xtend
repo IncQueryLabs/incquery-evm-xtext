@@ -1,74 +1,52 @@
 package com.incquerylabs.evm.xtext.ui
 
-import com.incquerylabs.evm.xtext.XtextActivationLifeCycle
 import com.incquerylabs.evm.xtext.XtextEventRealm
 import com.incquerylabs.evm.xtext.XtextIndexActivationState
-import com.incquerylabs.evm.xtext.resource.XtextIndexedResource
-import com.incquerylabs.evm.xtext.resource.XtextResourceJob
-import com.incquerylabs.evm.xtext.resource.events.XtextIndexResourceEventSourceSpecification
-import org.eclipse.incquery.runtime.evm.api.EventDrivenVM
-import org.eclipse.incquery.runtime.evm.api.Job
-import org.eclipse.incquery.runtime.evm.api.RuleSpecification
-import org.eclipse.xtext.resource.IResourceDescription.Event
-import org.eclipse.incquery.runtime.evm.api.RuleEngine
-import org.eclipse.incquery.runtime.evm.api.Context
+import com.incquerylabs.evm.xtext.XtextIndexRules
 import org.eclipse.incquery.runtime.evm.api.Activation
-import org.eclipse.incquery.runtime.evm.api.ActivationLifeCycle
-import com.incquerylabs.evm.xtext.eobject.event.XtextIndexedObjectEventSourceSpecification
-import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject
-import com.incquerylabs.evm.xtext.eobject.XtextObjectJob
+import org.eclipse.incquery.runtime.evm.api.Context
+import org.eclipse.incquery.runtime.evm.api.EventDrivenVM
+import org.eclipse.incquery.runtime.evm.api.RuleEngine
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.resource.IResourceDescription.Event
 import org.eclipse.xtext.resource.IResourceDescriptions
 
 class XtextIndexLoggerApplication {
     
     public static val INSTANCE = new XtextIndexLoggerApplication
     
+    @Accessors(PUBLIC_GETTER)
     var RuleEngine engine
+    extension XtextIndexRules rules = new XtextIndexRules
     
-    def resourceRule(ActivationLifeCycle lifecycle) {
-        val sourceSpecification = new XtextIndexResourceEventSourceSpecification
-        
-        val jobs = <Job<XtextIndexedResource>>newHashSet(
-            new XtextResourceJob(XtextIndexActivationState.APPEARED) [
+    def resource() {
+        resourceRule.action(XtextIndexActivationState.APPEARED) [
                 println("Resource appeared: " + it.URI)
-            ],
-            new XtextResourceJob(XtextIndexActivationState.UPDATED) [
+            ].action(XtextIndexActivationState.UPDATED) [
                 println("Resource updated: " + it.URI)
-            ],
-            new XtextResourceJob(XtextIndexActivationState.DISAPPEARED) [
+            ].action(XtextIndexActivationState.DISAPPEARED) [
                 println("Resource disappeared: " + it.URI)
-            ]
-        )
-        new RuleSpecification<XtextIndexedResource>(sourceSpecification, lifecycle, jobs)
+            ].build
     }
     
-    def objectRule(ActivationLifeCycle lifecycle) {
-        val sourceSpecification = new XtextIndexedObjectEventSourceSpecification
-        
-        val jobs = <Job<XtextIndexedObject>>newHashSet(
-            new XtextObjectJob(XtextIndexActivationState.APPEARED) [resource, object |
+    def object() {
+        objectRule.action(XtextIndexActivationState.APPEARED) [resource, object |
                 println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
-            ],
-            new XtextObjectJob(XtextIndexActivationState.UPDATED) [resource, object |
+            ].action(XtextIndexActivationState.UPDATED) [resource, object |
                 println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
-            ],
-            new XtextObjectJob(XtextIndexActivationState.DISAPPEARED) [resource, object |
+            ].action(XtextIndexActivationState.DISAPPEARED) [resource, object |
                 println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
-            ]
-        )
-        new RuleSpecification<XtextIndexedObject>(sourceSpecification, lifecycle, jobs)
+            ].build
     }
     
     def initialize(Event.Source source, IResourceDescriptions descriptions) {
         val realm = new XtextEventRealm(source, descriptions)
         engine = EventDrivenVM.createRuleEngine(realm)
         
-        val lifecycle = new XtextActivationLifeCycle 
-        
-        val resourceRuleSpecification = resourceRule(lifecycle)
+        val resourceRuleSpecification = resource
         engine.addRule(resourceRuleSpecification, resourceRuleSpecification.createEmptyFilter)
         
-        val objectRuleSpecification = objectRule(lifecycle)
+        val objectRuleSpecification = object
         engine.addRule(objectRuleSpecification, objectRuleSpecification.createEmptyFilter)
         
         //Initial firing
