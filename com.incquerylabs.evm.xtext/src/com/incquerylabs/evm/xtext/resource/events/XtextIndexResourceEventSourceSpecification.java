@@ -13,15 +13,17 @@ import com.incquerylabs.evm.xtext.resource.XtextIndexedResource;
 
 public class XtextIndexResourceEventSourceSpecification implements EventSourceSpecification<XtextIndexedResource> {
 
+	private final EventFilter<XtextIndexedResource> eventFilter = new EventFilter<XtextIndexedResource>() {
+		
+		@Override
+		public boolean isProcessable(XtextIndexedResource eventAtom) {
+			return true;
+		}
+	};
+	
 	@Override
 	public EventFilter<XtextIndexedResource> createEmptyFilter() {
-		return new EventFilter<XtextIndexedResource>() {
-
-			@Override
-			public boolean isProcessable(XtextIndexedResource eventAtom) {
-				return true;
-			}
-		};
+		return eventFilter;
 	}
 
 	@Override
