@@ -41,4 +41,13 @@
             commandId="com.incquerylabs.evm.xtext.ui.fire">
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.incquerylabs.evm.xtext.ui.util.XtextIntegrationExecutableExtensionFactory:com.incquerylabs.evm.xtext.ui.views.XtendClassesView"
+            id="com.incquerylabs.evm.xtext.ui.xtendclasses"
+            name="JVM Types Demo"
+            restorable="true">
+      </view>
+   </extension>
 </plugin>
