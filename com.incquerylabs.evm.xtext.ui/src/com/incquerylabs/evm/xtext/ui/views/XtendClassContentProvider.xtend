@@ -5,13 +5,13 @@ import com.incquerylabs.evm.xtext.XtextIndexRules
 import com.incquerylabs.evm.xtext.ui.XtextIndexLoggerApplication
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.incquery.runtime.evm.api.RuleEngine
-import org.eclipse.jface.viewers.AbstractListViewer
 import org.eclipse.jface.viewers.IStructuredContentProvider
 import org.eclipse.jface.viewers.Viewer
 import com.incquerylabs.evm.xtext.XtextIndexActivationState
 import org.eclipse.incquery.runtime.evm.api.RuleSpecification
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject
 import org.eclipse.incquery.runtime.evm.api.event.EventFilter
+import org.eclipse.jface.viewers.TableViewer
 
 class XtendClassContentProvider implements IStructuredContentProvider {
     
@@ -19,15 +19,15 @@ class XtendClassContentProvider implements IStructuredContentProvider {
     
     val RuleEngine engine = XtextIndexLoggerApplication.INSTANCE.getEngine()
     
-    var AbstractListViewer viewer
+    var TableViewer viewer
     var EClass clazz
     var RuleSpecification<XtextIndexedObject> rule
     var EventFilter<XtextIndexedObject> filter 
     
 
     override void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-        Preconditions.checkArgument(viewer instanceof AbstractListViewer)
-        this.viewer = viewer as AbstractListViewer
+        Preconditions.checkArgument(viewer instanceof TableViewer)
+        this.viewer = viewer as TableViewer
         if (oldInput instanceof EClass) {
             clazz = null
             engine.removeRule(rule, filter)

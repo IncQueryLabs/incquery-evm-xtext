@@ -2,11 +2,15 @@ package com.incquerylabs.evm.xtext.ui.views;
 
 import javax.inject.Inject;
 
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.common.types.TypesPackage;
@@ -30,12 +34,18 @@ public class XtendClassesView extends ViewPart {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		parent.setLayout(new FillLayout());
+		TableColumnLayout columnLayout = new TableColumnLayout();
+		parent.setLayout(columnLayout);
 		
-		ListViewer viewer = new ListViewer(parent);
+		TableViewer viewer = new TableViewer(parent);
 		viewer.setContentProvider(new XtendClassContentProvider());
-		viewer.setLabelProvider(new XtextIndexedObjectLabelProvider());
-		viewer.setInput(TypesPackage.Literals.JVM_TYPE);
+		
+		TableViewerColumn column = new TableViewerColumn(viewer, SWT.NONE);
+		XtextIndexedObjectLabelProvider labelProvider = new XtextIndexedObjectLabelProvider();
+		column.setLabelProvider(labelProvider);
+		ColumnViewerToolTipSupport.enableFor(viewer);
+		
+		columnLayout.setColumnData(column.getColumn(), new ColumnWeightData(100));
 		
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			
@@ -50,6 +60,8 @@ public class XtendClassesView extends ViewPart {
 				
 			}
 		});
+		
+		viewer.setInput(TypesPackage.Literals.JVM_TYPE);
 	}
 
 	@Override
