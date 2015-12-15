@@ -38,4 +38,11 @@
             restorable="true">
       </view>
    </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+      <consoleFactory
+            class="com.incquerylabs.evm.xtext.ui.util.XtextIntegrationExecutableExtensionFactory:com.incquerylabs.evm.xtext.ui.XtextIndexConsoleFactory"
+            label="Xtext Index Console">
+      </consoleFactory>
+   </extension>
 </plugin>
