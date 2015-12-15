@@ -2,7 +2,6 @@ package com.incquerylabs.evm.xtext.ui.views
 
 import com.google.common.base.Preconditions
 import com.incquerylabs.evm.xtext.XtextIndexRules
-import com.incquerylabs.evm.xtext.ui.XtextIndexLoggerApplication
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.incquery.runtime.evm.api.RuleEngine
 import org.eclipse.jface.viewers.IStructuredContentProvider
@@ -12,12 +11,13 @@ import org.eclipse.incquery.runtime.evm.api.RuleSpecification
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject
 import org.eclipse.incquery.runtime.evm.api.event.EventFilter
 import org.eclipse.jface.viewers.TableViewer
+import com.incquerylabs.evm.xtext.ui.XtextIndexVirtualMachine
 
 class XtendClassContentProvider implements IStructuredContentProvider {
     
     extension XtextIndexRules rules = new XtextIndexRules
     
-    val RuleEngine engine = XtextIndexLoggerApplication.INSTANCE.getEngine()
+    val RuleEngine engine = XtextIndexVirtualMachine.INSTANCE.getEngine()
     
     var TableViewer viewer
     var EClass clazz

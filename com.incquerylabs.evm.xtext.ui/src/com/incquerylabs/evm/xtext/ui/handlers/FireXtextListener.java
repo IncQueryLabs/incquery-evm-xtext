@@ -5,13 +5,13 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 
-import com.incquerylabs.evm.xtext.ui.XtextIndexLoggerApplication;
+import com.incquerylabs.evm.xtext.ui.XtextIndexVirtualMachine;
 
 public class FireXtextListener extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		XtextIndexLoggerApplication.INSTANCE.fire();
+		XtextIndexVirtualMachine.INSTANCE.fire();
 		return null;
 	}
 

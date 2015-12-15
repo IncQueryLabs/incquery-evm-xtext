@@ -19,7 +19,7 @@ import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.notification.IStateChangeEventBroker;
 
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject;
-import com.incquerylabs.evm.xtext.ui.XtextIndexLoggerApplication;
+import com.incquerylabs.evm.xtext.ui.XtextIndexVirtualMachine;
 
 public class XtendClassesView extends ViewPart {
 
@@ -29,7 +29,7 @@ public class XtendClassesView extends ViewPart {
 	@Inject
 	public XtendClassesView(IStateChangeEventBroker source, IResourceDescriptions descriptions) {
 		super();
-		XtextIndexLoggerApplication.INSTANCE.initialize(source, descriptions);
+		XtextIndexVirtualMachine.INSTANCE.initialize(source, descriptions);
 	}
 
 	@Override
