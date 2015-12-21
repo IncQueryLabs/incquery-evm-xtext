@@ -58,7 +58,7 @@ public class XtextIndexEventHandler<Atom, Source extends EventSourceAdapter<Atom
 
 			@Override
 			protected void activationMissing(Event<Atom> event) {
-				Preconditions.checkState(false, "Atom %s updated without existing activation in rule instance %s", event.getEventAtom(), this);
+//				Preconditions.checkState(false, "Atom %s updated without existing activation in rule instance %s", event.getEventAtom(), this);
 			}
 		});
 		
@@ -72,7 +72,7 @@ public class XtextIndexEventHandler<Atom, Source extends EventSourceAdapter<Atom
 
 			@Override
 			protected void activationMissing(Event<Atom> event) {
-				Preconditions.checkState(false, "Atom %s disappeared without existing activation in rule instance %s!", event.getEventAtom(), this);
+//				Preconditions.checkState(false, "Atom %s disappeared without existing activation in rule instance %s!", event.getEventAtom(), this);
 			}
 		});
 		

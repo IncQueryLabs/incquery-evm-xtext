@@ -33,8 +33,14 @@
          point="org.eclipse.ui.views">
       <view
             class="com.incquerylabs.evm.xtext.ui.util.XtextIntegrationExecutableExtensionFactory:com.incquerylabs.evm.xtext.ui.views.XtendClassesView"
-            id="com.incquerylabs.evm.xtext.ui.xtendclasses"
+            id="com.incquerylabs.evm.xtext.ui.inferredclasses"
             name="JVM Types Demo"
+            restorable="true">
+      </view>
+      <view
+            class="com.incquerylabs.evm.xtext.ui.util.XtextIntegrationExecutableExtensionFactory:com.incquerylabs.evm.xtext.ui.views.InferredClassViewerView"
+            id="com.incquerylabs.evm.xtext.ui.inferredclasses.viewer"
+            name="JVM Types Viewer Demo"
             restorable="true">
       </view>
    </extension>

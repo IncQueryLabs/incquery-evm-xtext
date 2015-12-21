@@ -37,7 +37,7 @@ class XtendClassContentProvider implements IStructuredContentProvider {
         if (newInput instanceof EClass) {
             clazz = newInput as EClass
             rule = buildRule
-            filter = [clazz.isSuperTypeOf(it.type)]
+            filter = [it.type != null && clazz.isSuperTypeOf(it.type)]
             engine.addRule(rule, filter)
         } else if (newInput !== null) {
             throw new IllegalArgumentException(
