@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: com.incquerylabs.evm.xtext.example
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: com.incquerylabs.evm.xtext.example; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.util,
+ org.antlr.runtime,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: org.apache.log4j
+Export-Package: com.incquerylabs.evm.xtext.example,
+ com.incquerylabs.evm.xtext.example.exampleLanguage,
+ com.incquerylabs.evm.xtext.example.exampleLanguage.impl,
+ com.incquerylabs.evm.xtext.example.exampleLanguage.util,
+ com.incquerylabs.evm.xtext.example.generator,
+ com.incquerylabs.evm.xtext.example.parser.antlr,
+ com.incquerylabs.evm.xtext.example.parser.antlr.internal,
+ com.incquerylabs.evm.xtext.example.scoping,
+ com.incquerylabs.evm.xtext.example.serializer,
+ com.incquerylabs.evm.xtext.example.services,
+ com.incquerylabs.evm.xtext.example.validation
+

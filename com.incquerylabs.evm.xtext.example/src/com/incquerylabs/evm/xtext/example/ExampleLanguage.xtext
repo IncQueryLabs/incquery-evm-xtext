@@ -1,0 +1,25 @@
+grammar com.incquerylabs.evm.xtext.example.ExampleLanguage with org.eclipse.xtext.common.Terminals
+
+generate exampleLanguage "http://incquerylabs.com/xtext-evm/ExampleLanguage"
+
+Model:
+	(classes += TClass)*;
+	
+TClass:
+	'class' name = ID
+	'{'
+	  features += TFeature
+	'}'
+;
+
+TFeature:
+    visibility = Visibility
+    name = ID
+    ':'
+    type = [TClass]
+    ';'
+;
+
+enum Visibility:
+    public | private
+;
