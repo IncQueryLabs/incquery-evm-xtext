@@ -43,6 +43,12 @@
             name="JVM Types Viewer Demo"
             restorable="true">
       </view>
+      <view
+            class="com.incquerylabs.evm.xtext.ui.util.XtextIntegrationExecutableExtensionFactory:com.incquerylabs.evm.xtext.ui.views.TClassViewerView"
+            id="com.incquerylabs.evm.xtext.ui.tclass.viewer"
+            name="TClass Viewer Demo"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.console.consoleFactories">

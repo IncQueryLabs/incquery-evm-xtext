@@ -2,4 +2,7 @@
   <extension id="com.incquerylabs.evm.queries.InferredModelQueries" point="org.eclipse.incquery.runtime.queryspecification">
     <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:com.incquerylabs.evm.queries.InferredModelQueries" id="com.incquerylabs.evm.queries.InferredModelQueries"/>
   </extension>
+  <extension id="com.incquerylabs.evm.queries.ExampleModelQueries" point="org.eclipse.incquery.runtime.queryspecification">
+    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:com.incquerylabs.evm.queries.ExampleModelQueries" id="com.incquerylabs.evm.queries.ExampleModelQueries"/>
+  </extension>
 </plugin>

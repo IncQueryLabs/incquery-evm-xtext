@@ -7,7 +7,7 @@ pattern inferredType(type : JvmDeclaredType) {
     JvmDeclaredType(type);
 }
 
-@Edge(source = referrer, target = referred, label = "feature.simpleName")
+@Edge(source = referrer, target = referred, label = "$feature.simpleName$")
 pattern refersType(referrer : JvmDeclaredType, feature : JvmFeature, referred : JvmDeclaredType) {
     JvmDeclaredType.members(referrer, feature);
     JvmFeature.declaringType(feature, referred);
