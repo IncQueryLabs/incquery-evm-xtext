@@ -45,10 +45,10 @@ class XtextIndexMessageConsole extends MessageConsole {
                 objectStream.println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
                 objectStream.flush
             ].action(XtextIndexActivationState.UPDATED) [resource, object |
-                objectStream.println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
+                objectStream.println('''«object.EClass.name» «object.name» updated in «resource.URI»''')
                 objectStream.flush
             ].action(XtextIndexActivationState.DISAPPEARED) [resource, object |
-                objectStream.println('''«object.EClass.name» «object.name» appeared in «resource.URI»''')
+                objectStream.println('''«object.EClass.name» «object.name» disappeared in «resource.URI»''')
                 objectStream.flush
             ].build
     }
