@@ -14,6 +14,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.common.types.TypesPackage;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.eclipse.xtext.ui.notification.IStateChangeEventBroker;
@@ -21,13 +22,13 @@ import org.eclipse.xtext.ui.notification.IStateChangeEventBroker;
 import com.incquerylabs.evm.xtext.eobject.XtextIndexedObject;
 import com.incquerylabs.evm.xtext.ui.XtextIndexVirtualMachine;
 
-public class XtendClassesView extends ViewPart {
+public class InferredClassView extends ViewPart {
 
 	@Inject
 	private IURIEditorOpener uriOpener;
 	
 	@Inject
-	public XtendClassesView(IStateChangeEventBroker source, IResourceDescriptions descriptions) {
+	public InferredClassView(IStateChangeEventBroker source, IResourceDescriptions descriptions) {
 		super();
 		XtextIndexVirtualMachine.INSTANCE.initialize(source, descriptions);
 	}
@@ -56,6 +57,9 @@ public class XtendClassesView extends ViewPart {
 					XtextIndexedObject object = (XtextIndexedObject) selection.getFirstElement();
 					
 					uriOpener.open(object.getEObject().getEObjectURI(), true);
+				} else if (selection.getFirstElement() instanceof IEObjectDescription) {
+					IEObjectDescription desc = (IEObjectDescription) selection.getFirstElement();
+					uriOpener.open(desc.getEObjectURI(), true);
 				}
 				
 			}
