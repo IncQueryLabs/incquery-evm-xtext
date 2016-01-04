@@ -11,7 +11,9 @@ import com.incquerylabs.evm.xtext.ui.XtextIndexVirtualMachine
 import javax.inject.Inject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.gef4.layout.algorithms.SpringLayoutAlgorithm
 import org.eclipse.gef4.zest.core.viewers.GraphViewer
+import org.eclipse.gef4.zest.core.widgets.ZestStyles
 import org.eclipse.incquery.runtime.api.AdvancedIncQueryEngine
 import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.base.api.BaseIndexOptions
@@ -31,8 +33,6 @@ import org.eclipse.xtext.resource.IResourceDescriptions
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.ui.notification.IStateChangeEventBroker
 import org.eclipse.xtext.ui.resource.IStorage2UriMapper
-import org.eclipse.gef4.layout.algorithms.SpringLayoutAlgorithm
-import org.eclipse.gef4.zest.core.widgets.ZestStyles
 
 class TClassViewerView extends ViewPart {
     package ResourceSet set = new XtextResourceSet
@@ -40,14 +40,22 @@ class TClassViewerView extends ViewPart {
     AdvancedIncQueryEngine engine
     extension XtextIndexRules rules = new XtextIndexRules
     val IStorage2UriMapper mapper
+    var GraphViewer viewer
 
     val rRule = {
         resourceRule.action(XtextIndexActivationState.APPEARED) [
+            println(it.URI + " appeared")
             it.ensureResourceLoaded
+            viewer.applyLayout
         ].action(XtextIndexActivationState.UPDATED) [
-            it.reloadResource
-        ].action(XtextIndexActivationState.DISAPPEARED) [
+            println(it.URI + " updated")
             it.unloadResource
+            it.ensureResourceLoaded
+            viewer.applyLayout
+        ].action(XtextIndexActivationState.DISAPPEARED) [
+            println(it.URI + " disappeared")
+            it.unloadResource
+            viewer.applyLayout
         ].build
 
     }
@@ -55,8 +63,7 @@ class TClassViewerView extends ViewPart {
     val EventFilter<XtextIndexedResource> rFilter = rRule.createEmptyFilter
     val oRule = {
         objectRule.action(XtextIndexActivationState.APPEARED) [ resource, obj |
-            resource.ensureResourceLoaded
-        ].action(XtextIndexActivationState.UPDATED) [ resource, obj |
+            println('''«obj.name» appeared in «resource.URI»''')
             resource.ensureResourceLoaded
         ].build
 
@@ -76,18 +83,8 @@ class TClassViewerView extends ViewPart {
         if (resource == null) {
             resource = set.createResource(desc.URI)
         }
-        if (resource != null && !resource.loaded) {
+        if (!resource.loaded) {
             resource.load(mapper.getStorages(desc.URI).head.first.contents, null)
-        }
-    }
-
-    private def reloadResource(IResourceDescription desc) {
-        val res = set.getResource(desc.URI, false)
-        if (res != null && res.isLoaded) {
-            res.unload
-            res.load(null)
-        } else {
-            ensureResourceLoaded(desc)
         }
     }
 
@@ -105,16 +102,16 @@ class TClassViewerView extends ViewPart {
     }
 
     override void createPartControl(Composite parent) {
-        var GraphViewer viewer = new GraphViewer(parent, SWT.H_SCROLL.bitwiseOr(SWT.V_SCROLL))
+        viewer = new GraphViewer(parent, SWT.H_SCROLL.bitwiseOr(SWT.V_SCROLL))
         viewer.connectionStyle = ZestStyles.CONNECTIONS_DIRECTED
         viewer.layoutAlgorithm = new SpringLayoutAlgorithm
         try {
-            initializeRules
             val options = new BaseIndexOptions(false, false)
             engine = AdvancedIncQueryEngine.from(IncQueryEngine.on(new EMFScope(set, options)))
+            initializeRules
             state = IncQueryViewerDataModel.newViewerState(engine, ExampleModelQueries.instance().getSpecifications(),
-                ViewerDataFilter.UNFILTERED, ImmutableSet.of(ViewerStateFeature.EDGE))
-            IncQueryGraphViewers.bindWithIsolatedNodes(viewer, state)
+                ViewerDataFilter.UNFILTERED, ImmutableSet.of(ViewerStateFeature.EDGE))  
+            IncQueryGraphViewers.bind(viewer, state)
         } catch (IncQueryException e) {
             // TODO Auto-generated catch block
             e.printStackTrace()
@@ -122,8 +119,8 @@ class TClassViewerView extends ViewPart {
     }
 
     def protected void initializeRules() {
-        XtextIndexVirtualMachine.INSTANCE.registerRule(rRule, rFilter)
-        XtextIndexVirtualMachine.INSTANCE.registerRule(oRule, oFilter)
+        XtextIndexVirtualMachine.INSTANCE.registerRule(rRule, rFilter, XtextIndexVirtualMachine.PRIORITY_RULE)
+        XtextIndexVirtualMachine.INSTANCE.registerRule(oRule, oFilter, XtextIndexVirtualMachine.PRIORITY_OBJECT)
         XtextIndexVirtualMachine.INSTANCE.fire
     }
 
