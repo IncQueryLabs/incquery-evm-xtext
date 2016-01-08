@@ -1,0 +1,19 @@
+class F {
+	public tmp : B;
+}
+
+class C {
+	private tmp : B;
+}
+
+class D{
+	private tst : E;
+}
+
+class E {
+	private t : C;
+}
+
+class I {
+	private t2 : F;
+}
