@@ -44,16 +44,13 @@ class TClassViewerView extends ViewPart {
 
     val rRule = {
         resourceRule.action(XtextIndexActivationState.APPEARED) [
-            println(it.URI + " appeared")
             it.ensureResourceLoaded
             viewer.applyLayout
         ].action(XtextIndexActivationState.UPDATED) [
-            println(it.URI + " updated")
             it.unloadResource
             it.ensureResourceLoaded
             viewer.applyLayout
         ].action(XtextIndexActivationState.DISAPPEARED) [
-            println(it.URI + " disappeared")
             it.unloadResource
             viewer.applyLayout
         ].build
@@ -63,7 +60,6 @@ class TClassViewerView extends ViewPart {
     val EventFilter<XtextIndexedResource> rFilter = rRule.createEmptyFilter
     val oRule = {
         objectRule.action(XtextIndexActivationState.APPEARED) [ resource, obj |
-            println('''«obj.name» appeared in «resource.URI»''')
             resource.ensureResourceLoaded
         ].build
 
