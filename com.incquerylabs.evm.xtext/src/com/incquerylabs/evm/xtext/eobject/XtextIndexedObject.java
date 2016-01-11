@@ -75,4 +75,10 @@ public class XtextIndexedObject {
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return eObject.getEClass().getName() + "(" + objectName + " in " + resourceURI.toString() + ")"; 
+	}
 }

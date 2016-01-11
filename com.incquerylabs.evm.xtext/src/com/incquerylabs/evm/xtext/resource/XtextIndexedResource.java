@@ -42,6 +42,11 @@ public class XtextIndexedResource {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return resourceURI.toString();
+	}
 	
 	
 }
