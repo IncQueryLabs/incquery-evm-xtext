@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import com.incquerylabs.evm.xtext.example.exampleLanguage.TClass
 
 /**
  * Generates code from your model files on save.
@@ -21,5 +22,8 @@ class ExampleLanguageGenerator extends AbstractGenerator {
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
+		resource.allContents.filter(TClass).forEach[
+			fsa.generateFile(it.name + ".txt", it.name)
+		]
 	}
 }
